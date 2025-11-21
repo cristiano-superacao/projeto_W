@@ -1,3 +1,9 @@
+import hashlib
+
+# Variável global para simular o usuário logado (sessão)
+# Em um sistema real, isso seria gerenciado por sessões web ou tokens
+USUARIO_LOGADO = None
+
 def _hash_senha(senha):
     return hashlib.sha256(senha.encode('utf-8')).hexdigest()
 
@@ -30,5 +36,31 @@ def cadastrar_usuario(nome, email, login, senha):
     usuarios.append(novo_usuario)
     if _salvar_usuarios(usuarios):
         print(f"Usuário '{login}' cadastrado com sucesso!")
+        return True
+    return False
+
+def autenticar_usuario(login, senha):
+    global USUARIO_LOGADO
+    usuarios = _carregar_usuarios()
+    senha_hash = _hash_senha(senha)
+    
+    for usuario in usuarios:
+        if usuario['login'] == login and usuario['senha_hash'] == senha_hash:
+            # Remove o hash da senha antes de definir como logado
+            usuario_logado = {k: v for k, v in usuario.items() if k != 'senha_hash'}
+            USUARIO_LOGADO = usuario_logado
+            print(f"Bem-vindo(a), {usuario_logado['nome']}!")
+            return usuario_logado
+            
+    print("Erro: Login ou senha inválidos.")
+    return None
+def get_usuario_logado():
+    return USUARIO_LOGADO
+
+def logout():
+    global USUARIO_LOGADO
+    if USUARIO_LOGADO:
+        print(f"Logout de {USUARIO_LOGADO['nome']} realizado com sucesso.")
+        USUARIO_LOGADO = None
         return True
     return False
