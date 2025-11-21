@@ -1,3 +1,33 @@
+"""
+================================================================================
+MÓDULO: usuarios.py
+================================================================================
+DESCRIÇÃO:
+    Módulo responsável pelo GERENCIAMENTO DE USUÁRIOS do sistema TaskFlow.
+    Implementa todas as funcionalidades relacionadas a autenticação e
+    controle de acesso.
+
+FUNCIONALIDADES PRINCIPAIS:
+    - Cadastro de novos usuários
+    - Login com autenticação segura (hash SHA256)
+    - Logout do sistema
+    - Controle de sessão (usuário logado)
+    - Busca de usuários por ID
+
+SEGURANÇA:
+    - Senhas nunca são armazenadas em texto puro
+    - Utiliza hash SHA256 para criptografia de senhas
+    - Validação de unicidade de login
+    - Remoção do hash da senha na sessão ativa
+
+IMPORTANTE PARA APRESENTAÇÃO:
+    Este módulo demonstra boas práticas de segurança em sistemas web:
+    - Nunca armazenar senhas em texto claro
+    - Usar funções hash criptográficas
+    - Separar dados sensíveis da sessão do usuário
+================================================================================
+"""
+
 import hashlib
 
 # Variável global para simular o usuário logado (sessão)
@@ -64,3 +94,9 @@ def logout():
         USUARIO_LOGADO = None
         return True
     return False
+def get_usuario_por_id(user_id):
+    usuarios = _carregar_usuarios()
+    for usuario in usuarios:
+        if usuario['id'] == user_id:
+            return usuario
+    return None
