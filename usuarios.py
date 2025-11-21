@@ -64,3 +64,9 @@ def logout():
         USUARIO_LOGADO = None
         return True
     return False
+def get_usuario_por_id(user_id):
+    usuarios = _carregar_usuarios()
+    for usuario in usuarios:
+        if usuario['id'] == user_id:
+            return usuario
+    return None
