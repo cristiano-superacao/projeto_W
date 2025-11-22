@@ -46,3 +46,11 @@ def tela_login():
     senha = input("Senha: ")
     
     autenticar_usuario(login, senha)
+    
+def tela_criar_tarefa():
+    print("\n--- Criar Nova Tarefa ---")
+    titulo = input("Título da Tarefa: ")
+    descricao = input("Descrição: ")
+    prazo = input("Prazo (DD/MM/AAAA): ")
+    
+    criar_tarefa(titulo, descricao, prazo)
