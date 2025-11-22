@@ -409,13 +409,50 @@ Atualizado com novas funcionalidades:
 
 Este projeto é de código aberto e disponível para fins educacionais.
 
-## Equipe:
+---
 
-Materia:
-Professor:
-Alunos:
-01: Gabriela M. N. Silva
-02: Cristiano Silva Santos
-03: Joel Macena Costa
-04: Josilton José Almeida Santos
+## Equipe
+
+### Informações do Projeto
+- Disciplina: Lógica de Programação
+- Professor: Washington Luis Souza Anunciação
+- Data de Início: 22 de novembro de 2025
+
+### Integrantes
+
+| # | Nome Completo |
+|---|---|
+| 1 | Gabriela M. N. Silva |
+| 2 | Cristiano Silva Santos |
+| 3 | Joel Macena Costa |
+| 4 | Josilton José Almeida Santos |
+
+### Responsabilidades
+- **Gabriela M. N. Silva**: Desenvolvedora principal, autora da conta GitHub (gabriela.m.silva@ba.estudante.senai.br), integração com repositório remoto
+- **Cristiano Silva Santos**: Desenvolvedor, contribuidor do projeto
+- **Joel Macena Costa**: Desenvolvedor, contribuidor do projeto
+- **Josilton José Almeida Santos**: Desenvolvedor, contribuidor do projeto
+
+### Contribuições
+Todos os integrantes contribuem para:
+- Implementação de funcionalidades
+- Testes e validação
+- Documentação
+- Revisão de código
+
+---
+
+## Histórico de Atualizações
+
+### 22 de Novembro de 2025
+- Estrutura inicial do projeto criada
+- Módulos básicos implementados (usuarios.py, Tarefas.py, main.py)
+- Sistema de autenticação com SHA256
+- CRUD completo de tarefas
+- Loop principal com gerenciamento de estado
+- Sistema de relatórios (Concluídas, Pendentes, Atrasadas)
+- Detecção automática de tarefas atrasadas
+- Documentação completa do projeto
+
+---
 
