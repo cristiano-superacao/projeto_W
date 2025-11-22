@@ -92,3 +92,32 @@ def tela_excluir_tarefa():
         return
     
     excluir_tarefa(tarefa_id)
+
+def tela_relatorios():
+    print("\n--- Relatórios ---")
+    print("1. Tarefas Concluídas")
+    print("2. Tarefas Pendentes")
+    print("3. Tarefas Atrasadas")
+    print("4. Voltar")
+    
+    escolha = input("Escolha uma opção: ")
+    
+    if escolha == '1':
+        lista = tarefas_concluidas()
+        exibir_relatorio("Tarefas Concluídas", lista)
+    elif escolha == '2':
+        lista = tarefas_pendentes()
+        exibir_relatorio("Tarefas Pendentes", lista)
+    elif escolha == '3':
+        lista = tarefas_atrasadas()
+        exibir_relatorio("Tarefas Atrasadas", lista)
+    elif escolha == '4':
+        return
+    else:
+        print("Opção inválida.")
+        return
+        
+    if lista:
+        exportar = input("Deseja exportar este relatório para um arquivo TXT? (s/n): ").lower()
+        if exportar == 's':
+            exportar_relatorio(f"Relatório de {escolha}", lista)
