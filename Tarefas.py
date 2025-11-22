@@ -1,3 +1,36 @@
+"""
+================================================================================
+MÓDULO: tarefas.py
+================================================================================
+DESCRIÇÃO:
+    Módulo responsável pelo GERENCIAMENTO DE TAREFAS (CRUD completo).
+    Implementa todas as operações de Criação, Leitura, Atualização e
+    Exclusão de tarefas do sistema.
+
+FUNCIONALIDADES PRINCIPAIS:
+    - Criar novas tarefas com prazo e responsável
+    - Listar tarefas (todas ou filtradas por usuário)
+    - Editar informações de tarefas existentes
+    - Marcar tarefas como concluídas
+    - Excluir tarefas
+    - Verificação automática de tarefas atrasadas
+
+STATUS DE TAREFAS:
+    - Pendente: Tarefa criada, aguardando conclusão
+    - Concluída: Tarefa finalizada pelo responsável
+    - Atrasada: Tarefa pendente com prazo vencido (calculado dinamicamente)
+
+REGRAS DE NEGÓCIO:
+    - Apenas o responsável pode editar/concluir/excluir suas tarefas
+    - Datas devem estar no formato DD/MM/AAAA
+    - Cada tarefa possui ID único auto-incrementado
+    - Registro automático de data/hora de criação
+
+IMPORTANTE PARA APRESENTAÇÃO:
+    Este módulo demonstra o padrão CRUD (Create, Read, Update, Delete),
+    fundamental em qualquer sistema de gerenciamento de dados.
+================================================================================
+"""
 
 from datetime import datetime
 from utils.arquivos import ler_dados, salvar_dados, ARQUIVO_TAREFAS
