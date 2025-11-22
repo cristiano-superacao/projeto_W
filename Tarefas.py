@@ -200,3 +200,107 @@ def _encontrar_tarefa(tarefas, tarefa_id):
         if t['id'] == tarefa_id:
             return t
     return None
+
+
+def editar_tarefa(tarefa_id, novo_titulo=None, nova_descricao=None, novo_prazo_str=None):
+    """
+    Edita informações de uma tarefa existente (UPDATE do CRUD).
+    
+    PARÂMETROS:
+        tarefa_id (int): ID da tarefa a ser editada
+        novo_titulo (str, opcional): Novo título (None = não altera)
+        nova_descricao (str, opcional): Nova descrição (None = não altera)
+        novo_prazo_str (str, opcional): Novo prazo DD/MM/AAAA (None = não altera)
+    
+    RETORNO:
+        bool: True se editou com sucesso, False se houve erro
+    
+    REGRAS DE SEGURANÇA:
+        - Apenas o responsável pela tarefa pode editá-la
+        - Valida formato de data se novo prazo for fornecido
+        - Campos None são mantidos sem alteração
+    
+    VALIDAÇÕES:
+        - Tarefa deve existir
+        - Usuário logado deve ser o responsável
+        - Data deve estar no formato correto
+    """
+    tarefas = _carregar_tarefas()
+    tarefa = _encontrar_tarefa(tarefas, tarefa_id)
+    usuario = get_usuario_logado()
+
+    if not tarefa:
+        print(f"Erro: Tarefa com ID {tarefa_id} não encontrada.")
+        return False
+        
+    # Permite edição apenas se o usuário logado for o responsável
+    if tarefa['responsavel_id'] != usuario['id']:
+        print("Erro: Você só pode editar tarefas que você é o responsável.")
+        return False
+
+    modificado = False
+    if novo_titulo:
+        tarefa['titulo'] = novo_titulo
+        modificado = True
+    if nova_descricao:
+        tarefa['descricao'] = nova_descricao
+        modificado = True
+    if novo_prazo_str:
+        try:
+            # Validação básica do formato da data
+            tarefa['prazo'] = datetime.strptime(novo_prazo_str, '%d/%m/%Y').strftime('%d/%m/%Y')
+            modificado = True
+        except ValueError:
+            print("Erro: Formato de prazo inválido. Use DD/MM/AAAA. Nenhuma alteração feita no prazo.")
+            return False
+
+    if modificado and _salvar_tarefas(tarefas):
+        print(f"Tarefa ID {tarefa_id} atualizada com sucesso.")
+        return True
+    elif not modificado:
+        print("Nenhuma alteração foi solicitada.")
+        return True
+    return False
+
+
+def concluir_tarefa(tarefa_id):
+    """
+    Marca uma tarefa como concluída (atualização de status).
+    
+    PARÂMETROS:
+        tarefa_id (int): ID da tarefa a ser concluída
+    
+    RETORNO:
+        bool: True se concluiu com sucesso, False se houve erro
+    
+    REGRAS DE NEGÓCIO:
+        - Apenas o responsável pode concluir sua tarefa
+        - Muda status de "Pendente" para "Concluída"
+        - Se já estiver concluída, apenas informa ao usuário
+    
+    VALIDAÇÕES:
+        - Tarefa deve existir
+        - Usuário logado deve ser o responsável
+    """
+    tarefas = _carregar_tarefas()
+    tarefa = _encontrar_tarefa(tarefas, tarefa_id)
+    usuario = get_usuario_logado()
+
+    if not tarefa:
+        print(f"Erro: Tarefa com ID {tarefa_id} não encontrada.")
+        return False
+        
+    # Permite conclusão apenas se o usuário logado for o responsável
+    if tarefa['responsavel_id'] != usuario['id']:
+        print("Erro: Você só pode concluir tarefas que você é o responsável.")
+        return False
+
+    if tarefa['status'] != STATUS_CONCLUIDA:
+        tarefa['status'] = STATUS_CONCLUIDA
+        if _salvar_tarefas(tarefas):
+            print(f"Tarefa ID {tarefa_id} marcada como '{STATUS_CONCLUIDA}'.")
+            return True
+    else:
+        print(f"Tarefa ID {tarefa_id} já está '{STATUS_CONCLUIDA}'.")
+        return True
+    return False
