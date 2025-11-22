@@ -253,3 +253,54 @@ def editar_tarefa(tarefa_id, novo_titulo=None, nova_descricao=None, novo_prazo_s
         except ValueError:
             print("Erro: Formato de prazo inválido. Use DD/MM/AAAA. Nenhuma alteração feita no prazo.")
             return False
+
+    if modificado and _salvar_tarefas(tarefas):
+        print(f"Tarefa ID {tarefa_id} atualizada com sucesso.")
+        return True
+    elif not modificado:
+        print("Nenhuma alteração foi solicitada.")
+        return True
+    return False
+
+
+def concluir_tarefa(tarefa_id):
+    """
+    Marca uma tarefa como concluída (atualização de status).
+    
+    PARÂMETROS:
+        tarefa_id (int): ID da tarefa a ser concluída
+    
+    RETORNO:
+        bool: True se concluiu com sucesso, False se houve erro
+    
+    REGRAS DE NEGÓCIO:
+        - Apenas o responsável pode concluir sua tarefa
+        - Muda status de "Pendente" para "Concluída"
+        - Se já estiver concluída, apenas informa ao usuário
+    
+    VALIDAÇÕES:
+        - Tarefa deve existir
+        - Usuário logado deve ser o responsável
+    """
+    tarefas = _carregar_tarefas()
+    tarefa = _encontrar_tarefa(tarefas, tarefa_id)
+    usuario = get_usuario_logado()
+
+    if not tarefa:
+        print(f"Erro: Tarefa com ID {tarefa_id} não encontrada.")
+        return False
+        
+    # Permite conclusão apenas se o usuário logado for o responsável
+    if tarefa['responsavel_id'] != usuario['id']:
+        print("Erro: Você só pode concluir tarefas que você é o responsável.")
+        return False
+
+    if tarefa['status'] != STATUS_CONCLUIDA:
+        tarefa['status'] = STATUS_CONCLUIDA
+        if _salvar_tarefas(tarefas):
+            print(f"Tarefa ID {tarefa_id} marcada como '{STATUS_CONCLUIDA}'.")
+            return True
+    else:
+        print(f"Tarefa ID {tarefa_id} já está '{STATUS_CONCLUIDA}'.")
+        return True
+    return False
