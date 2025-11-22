@@ -148,3 +148,26 @@ def listar_tarefas(filtrar_por_responsavel=True):
     """
     tarefas = _carregar_tarefas()
     usuario = get_usuario_logado()
+    
+    if filtrar_por_responsavel and usuario:
+        tarefas_filtradas = [t for t in tarefas if t['responsavel_id'] == usuario['id']]
+    else:
+        tarefas_filtradas = tarefas
+        
+    if not tarefas_filtradas:
+        print("Nenhuma tarefa encontrada.")
+        return []
+        
+    print("\n--- Lista de Tarefas ---")
+    for t in tarefas_filtradas:
+        # Verifica se a tarefa está atrasada
+        status = t['status']
+        if status == STATUS_PENDENTE:
+            try:
+                prazo_dt = datetime.strptime(t['prazo'], '%d/%m/%Y')
+                if prazo_dt < datetime.now().replace(hour=0, minute=0, second=0, microsecond=0):
+                    status = STATUS_ATRASADA
+            except ValueError:
+                pass # Ignora se o formato da data estiver errado
+        
+        print(f"ID: {t['id']} | Título: {t['titulo']} | Prazo: {t['prazo']} | Status: {status} | Responsável: {t['responsavel_nome']}")
