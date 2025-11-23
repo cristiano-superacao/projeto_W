@@ -169,21 +169,27 @@ Controle de Acesso e Segurança (Novo):
 ### relatorios.py - Geração de Relatórios
 Módulo responsável pela coleta, formatação e exportação de relatórios de tarefas.
 
-Funções Principais (implementadas em main.py):
-- tarefas_concluidas() - Retorna lista de tarefas com status Concluída
-- tarefas_pendentes() - Retorna lista de tarefas com status Pendente
-- tarefas_atrasadas() - Retorna lista de tarefas com prazo vencido
-- exibir_relatorio(titulo, lista_tarefas) - Formata e exibe relatório no console
-- exportar_relatorio(titulo, lista_tarefas) - Salva relatório em arquivo TXT
+Funções Principais:
+- tarefas_concluidas() - Retorna lista de tarefas com status "Concluída"
+- tarefas_pendentes() - Retorna lista de tarefas com status "Pendente"
+- tarefas_atrasadas() - Retorna lista de tarefas pendentes com prazo vencido
+
+Funções Auxiliares:
+- _filtrar_tarefas(status_desejado=None, verificar_atraso=False) - Filtragem centralizada de tarefas
 
 Funcionalidades:
-- Filtragem por status de tarefa
-- Estatísticas (contagem total, por responsável)
-- Formatação clara e legível para console
-- Exportação com timestamp para arquivo TXT
+- Filtragem por status de tarefa (Concluídas, Pendentes, Atrasadas)
+- Detecção automática de tarefas vencidas
+- Comparação de prazos com data/hora atual
+- Tratamento robusto de erros em datas inválidas
 - Cada usuário vê apenas suas próprias tarefas nos relatórios
 
-__NOTA__: As funções de relatório estão sendo implementadas atualmente. O módulo `relatorio.py` contém a estrutura base com documentação completa, e as funções serão desenvolvidas em breve para integração total com o sistema.
+Importações:
+- Utiliza constantes de status do módulo `tarefas.py` (STATUS_CONCLUIDA, STATUS_PENDENTE, STATUS_ATRASADA)
+- Acessa função privada `_carregar_tarefas()` do módulo `tarefas.py`
+- Integra função `get_usuario_por_id()` do módulo `usuarios.py`
+
+__NOTA__: O módulo `relatorios.py` está completo e totalmente integrado com o sistema. Implementa as três funções principais para geração de relatórios (tarefas concluídas, pendentes e atrasadas) com filtragem automática de dados.
 
 ---
 
