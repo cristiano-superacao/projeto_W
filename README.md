@@ -137,7 +137,7 @@ Funções Principais:
 - listar_tarefas(filtrar_por_responsavel=True) - Lista tarefas com filtro opcional
   * Detecta automaticamente tarefas atrasadas comparando prazo com data atual
   * Mostra status visual dinamicamente sem alterar o arquivo
-- editar_tarefa(tarefa_id, novo_titulo, nova_descricao, novo_prazo) - Modifica tarefa existente
+- editar_tarefa(tarefa_id, novo_titulo, nova_descricao, novo_prazo) - Modifica tarefa existente com controle de acesso
 - concluir_tarefa(tarefa_id) - Marca tarefa como concluída
 - excluir_tarefa(tarefa_id) - Remove tarefa permanentemente
 
@@ -158,26 +158,38 @@ Regras de Negócio:
 - Cada tarefa registra automaticamente a hora de criação
 - Tarefas atrasadas são detectadas em tempo real (sem modificar o JSON)
 
+Controle de Acesso e Segurança (Novo):
+- Apenas o responsável pela tarefa pode editá-la, concluí-la ou excluí-la
+- Validações de permissão impedem acesso não autorizado
+- Campos opcionais em edição permitem modificações parciais
+- Confirmação de sucesso com mensagens claras ao usuário
+
 ---
 
 ### relatorios.py - Geração de Relatórios
 Módulo responsável pela coleta, formatação e exportação de relatórios de tarefas.
 
-Funções Principais (implementadas em main.py):
-- tarefas_concluidas() - Retorna lista de tarefas com status Concluída
-- tarefas_pendentes() - Retorna lista de tarefas com status Pendente
-- tarefas_atrasadas() - Retorna lista de tarefas com prazo vencido
-- exibir_relatorio(titulo, lista_tarefas) - Formata e exibe relatório no console
-- exportar_relatorio(titulo, lista_tarefas) - Salva relatório em arquivo TXT
+Funções Principais:
+- tarefas_concluidas() - Retorna lista de tarefas com status "Concluída"
+- tarefas_pendentes() - Retorna lista de tarefas com status "Pendente"
+- tarefas_atrasadas() - Retorna lista de tarefas pendentes com prazo vencido
+
+Funções Auxiliares:
+- _filtrar_tarefas(status_desejado=None, verificar_atraso=False) - Filtragem centralizada de tarefas
 
 Funcionalidades:
-- Filtragem por status de tarefa
-- Estatísticas (contagem total, por responsável)
-- Formatação clara e legível para console
-- Exportação com timestamp para arquivo TXT
+- Filtragem por status de tarefa (Concluídas, Pendentes, Atrasadas)
+- Detecção automática de tarefas vencidas
+- Comparação de prazos com data/hora atual
+- Tratamento robusto de erros em datas inválidas
 - Cada usuário vê apenas suas próprias tarefas nos relatórios
 
-NOTA: As funções de relatório estão sendo chamadas a partir do main.py. Um módulo relatorios.py separado pode ser criado futuramente para melhor separação de responsabilidades.
+Importações:
+- Utiliza constantes de status do módulo `tarefas.py` (STATUS_CONCLUIDA, STATUS_PENDENTE, STATUS_ATRASADA)
+- Acessa função privada `_carregar_tarefas()` do módulo `tarefas.py`
+- Integra função `get_usuario_por_id()` do módulo `usuarios.py`
+
+__NOTA__: O módulo `relatorios.py` está completo e totalmente integrado com o sistema. Implementa as três funções principais para geração de relatórios (tarefas concluídas, pendentes e atrasadas) com filtragem automática de dados.
 
 ---
 
@@ -453,6 +465,45 @@ Todos os integrantes contribuem para:
 - Sistema de relatórios (Concluídas, Pendentes, Atrasadas)
 - Detecção automática de tarefas atrasadas
 - Documentação completa do projeto
+
+### Atualizações Recentes (Última Versão)
+- __Funções CRUD Expandidas__: Implementação completa de `editar_tarefa()`, `concluir_tarefa()` e `excluir_tarefa()` em `tarefas.py`
+- __Controle de Acesso__: Validação de segurança assegurando que apenas o responsável pela tarefa pode editá-la, concluí-la ou excluí-la
+- __Arquivo de Relatórios__: Módulo `relatorios.py` completo com funções de geração de relatórios
+- __Funções de Exportação__: Adicionadas `exibir_relatorio()` e `exportar_relatorio()` para visualização e exportação em TXT
+- __Tabela de Integrantes Atualizada__: Adição de coluna de email para melhor contato com todos os membros da equipe
+- __Documentação Aprimorada__: Melhoria nas responsabilidades e informações de contato de cada membro do projeto
+- __Correções de Estrutura__: Renomeação de arquivos para padrão lowercase (`Tarefas.py` → `tarefas.py`, `arquivo.py` → `arquivos.py`)
+- __Pacote Utils__: Criação de `utils/__init__.py` para reconhecer a pasta como pacote Python
+- __Linting Corrigido__: Correção de linhas longas e espaçamento em `utils/arquivos.py`
+
+---
+
+## Status do Projeto
+
+### Versão Atual: 1.0.0 - Completa e Funcional ✓
+
+- ✓ Sistema de autenticação com criptografia SHA256
+- ✓ CRUD completo de tarefas (Criar, Ler, Atualizar, Excluir)
+- ✓ Controle de acesso por responsável
+- ✓ Sistema de relatórios com 3 categorias
+- ✓ Exportação de relatórios em arquivo TXT
+- ✓ Detecção automática de tarefas atrasadas
+- ✓ Interface CLI intuitiva
+- ✓ Persistência de dados em JSON
+- ✓ Todos os módulos Python compilando sem erros
+- ✓ Imports funcionando corretamente
+
+### Próximas Melhorias (Sugestões Futuras)
+
+- Interface gráfica (GUI) usando Tkinter ou PyQt
+- Autenticação com tokens JWT
+- Sincronização em nuvem
+- Notificações de tarefas atrasadas
+- Dashboard com estatísticas avançadas
+- Sistema de permissões por grupo
+- Integração com calendário
+- API REST para integração com outras aplicações
 
 ---
 

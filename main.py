@@ -37,10 +37,17 @@ IMPORTANTE PARA APRESENTAÇÃO:
 ================================================================================
 """
 
-import sys
-from usuarios import cadastrar_usuario, autenticar_usuario, logout, get_usuario_logado
-from tarefas import criar_tarefa, listar_tarefas, editar_tarefa, concluir_tarefa, excluir_tarefa
-from relatorios import tarefas_concluidas, tarefas_pendentes, tarefas_atrasadas, exibir_relatorio, exportar_relatorio
+from usuarios import (
+    cadastrar_usuario, autenticar_usuario, logout, get_usuario_logado
+)
+from tarefas import (
+    criar_tarefa, listar_tarefas, editar_tarefa, concluir_tarefa,
+    excluir_tarefa
+)
+from relatorios import (
+    tarefas_concluidas, tarefas_pendentes, tarefas_atrasadas,
+    exibir_relatorio, exportar_relatorio
+)
 
 # Variável global para controle do loop principal
 EXECUTANDO = True
@@ -54,7 +61,6 @@ def menu_principal():
         1. Login - Acessar o sistema
         2. Cadastrar Novo Usuário - Criar conta
         3. Sair - Encerrar aplicação
-    
     RETORNO:
         str: Opção escolhida pelo usuário
     """
@@ -62,9 +68,10 @@ def menu_principal():
     print("1. Login")
     print("2. Cadastrar Novo Usuário")
     print("3. Sair")
-    
+      
     escolha = input("Escolha uma opção: ")
     return escolha
+
 
 def menu_logado():
     """
@@ -88,7 +95,7 @@ def menu_logado():
     """
     usuario = get_usuario_logado()
     if not usuario:
-        return # Não deveria acontecer
+        return  # Não deveria acontecer
         
     print(f"\n--- Menu de {usuario['nome']} ---")
     print("1. Minhas Tarefas")
@@ -124,6 +131,7 @@ def tela_cadastro():
     
     if cadastrar_usuario(nome, email, login, senha):
         print("Cadastro realizado. Você pode fazer login agora.")
+
 
 def tela_login():
     """
@@ -164,6 +172,7 @@ def tela_criar_tarefa():
     
     criar_tarefa(titulo, descricao, prazo)
 
+
 def tela_editar_tarefa():
     """
     Interface para editar uma tarefa existente.
@@ -193,6 +202,7 @@ def tela_editar_tarefa():
     
     editar_tarefa(tarefa_id, novo_titulo, nova_descricao, novo_prazo)
 
+
 def tela_concluir_tarefa():
     """
     Interface para marcar uma tarefa como concluída.
@@ -214,6 +224,7 @@ def tela_concluir_tarefa():
         return
         
     concluir_tarefa(tarefa_id)
+
 
 def tela_excluir_tarefa():
     """
@@ -283,7 +294,10 @@ def tela_relatorios():
         return
         
     if lista:
-        exportar = input("Deseja exportar este relatório para um arquivo TXT? (s/n): ").lower()
+        pergunta = (
+            "Deseja exportar este relatório para um arquivo TXT? (s/n): "
+        )
+        exportar = input(pergunta).lower()
         if exportar == 's':
             exportar_relatorio(f"Relatório de {escolha}", lista)
 
