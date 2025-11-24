@@ -538,17 +538,38 @@ body {
 }
 
 .task-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
     margin-top: auto;
+    padding-top: 16px;
 }
 
 .btn-sm {
-    padding: 8px 14px;
-    font-size: 12px;
+    padding: 10px 16px;
+    font-size: 13px;
     font-weight: 600;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-sm i {
+    font-size: 14px;
+}
+
+.btn-sm .btn-text {
+    display: inline;
+}
+
+.btn-sm:active {
+    transform: scale(0.95);
 }
 
 .btn-info {
@@ -585,6 +606,18 @@ body {
     background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%);
+    color: white;
+    border: none;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
 }
 
 /* Empty State */
@@ -899,6 +932,22 @@ body {
 }
 
 /* Responsive */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .task-actions {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .task-actions .btn-sm {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+
+    .tasks-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
 @media (max-width: 768px) {
     .nav-menu {
         display: none;
@@ -952,12 +1001,22 @@ body {
     }
 
     .task-actions {
-        flex-direction: column;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
     }
 
     .task-actions .btn-sm {
         width: 100%;
         justify-content: center;
+        padding: 12px 10px;
+    }
+
+    .task-actions .btn-sm .btn-text {
+        display: none;
+    }
+
+    .task-actions .btn-sm i {
+        font-size: 16px;
     }
 
     .stats-grid {
@@ -1008,5 +1067,18 @@ body {
         min-width: calc(50% - 4px);
         font-size: 13px;
         padding: 8px 12px;
+    }
+
+    .btn-sm .btn-text {
+        font-size: 11px;
+    }
+
+    .task-actions {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .task-actions .btn-sm {
+        padding: 12px;
     }
 }
