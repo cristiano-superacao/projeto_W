@@ -368,7 +368,7 @@ def loop_principal():
                 else:
                     print("Opção inválida. Tente novamente.")
         except Exception as e:
-            print(f"\n--- ERRO GLOBAL ---")
+            print("\n--- ERRO GLOBAL ---")
             print(f"Ocorreu um erro inesperado: {e}")
             print("O sistema continuará rodando. Por favor, tente novamente.")
 

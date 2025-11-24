@@ -181,7 +181,7 @@ def exportar_relatorio(titulo, lista_tarefas):
                 for tarefa in lista_tarefas:
                     f.write(f"ID: {tarefa['id']}\n")
                     f.write(f"Título: {tarefa['titulo']}\n")
-                    f.write(f"Descrição: {tarefa['descricao']}\n")
+                    f.write(f"Descrição: {tarefa['descrição']}\n")
                     f.write(f"Prazo: {tarefa['prazo']}\n")
                     f.write(f"Status: {tarefa['status']}\n")
                     f.write(f"Responsável: {tarefa['responsavel_nome']}\n")
